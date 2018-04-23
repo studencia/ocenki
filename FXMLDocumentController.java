@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package apka;
 
 import java.net.URL;
@@ -12,10 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-/**
- *
- * @author BlackGreen
- */
 public class FXMLDocumentController implements Initializable {
     
     @FXML
@@ -25,6 +16,33 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
+    }
+    
+    public Connection polacz() {
+        String DBDRIVER = "com.mysql.jdbc.Driver";
+        String DBURL = "jdbc:mysql://127.0.0.1:3306/baza";
+        String DBUSER = "root";
+        String DBPASS = "";
+
+        Connection polaczenie = null;
+
+        try {
+            Class.forName(DBDRIVER).newInstance();
+            polaczenie = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return polaczenie;
+    }
+
+    public void rozlacz(Connection polaczenie) {
+        try {
+            polaczenie.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
