@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="447.0" prefWidth="697.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="apka.FXMLDocumentController">
+   <children>
+      <Pane layoutY="-1.0" prefHeight="447.0" prefWidth="145.0" style="-fx-background-color: green;">
+         <children>
+            <Pane prefHeight="95.0" prefWidth="145.0" style="-fx-background-color: blue;">
+               <children>
+                  <Label layoutX="29.0" layoutY="39.0" text="uwal 1.0" />
+               </children>
+            </Pane>
+            <Button layoutX="14.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Start" />
+            <Button layoutX="14.0" layoutY="252.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Dodaj" />
+            <Button layoutX="14.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Wyniki" />
+            <Button layoutX="14.0" layoutY="379.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Pomoc" />
+         </children>
+      </Pane>
+      <Pane layoutX="144.0" prefHeight="95.0" prefWidth="553.0" style="-fx-background-color: orange;">
+         <children>
+            <Label layoutX="37.0" layoutY="73.0" text="niezdane" />
+            <Label layoutX="169.0" layoutY="73.0" text="zdane" />
+            <Label layoutX="296.0" layoutY="73.0" text="wszystkich" />
+            <Label layoutX="430.0" layoutY="73.0" text="zdane/nieezdane" />
+            <Label layoutX="57.0" layoutY="48.0" text="0" />
+            <Label layoutX="181.0" layoutY="48.0" text="0" />
+            <Label layoutX="320.0" layoutY="48.0" text="0" />
+            <Label layoutX="472.0" layoutY="48.0" text="0" />
+         </children>
+      </Pane>
+      <Pane layoutX="145.0" layoutY="95.0" prefHeight="351.0" prefWidth="553.0" style="-fx-background-color: grey;" />
+   </children>
+</AnchorPane>
