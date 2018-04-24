@@ -10,7 +10,23 @@ import javafx.scene.control.Label;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private Label label;
+    public Pane tdodaj;
+    public Pane tstart;
+    public Pane twyniki;
+    public Label pasekWszyscy;
+    public Label pasekZdane;
+    public Label pasekNiezdane;
+    public Label pasekProcenty;
+    public TextField indeks;
+    public TextField nazwisko;
+    public TextField wyn1;
+    public TextField wyn2;
+    public TextField wyn3;
+    public ChoiceBox wybor;
+    public ListView lista;
+    public NumberAxis xAxis = new NumberAxis();
+    public CategoryAxis yAxis = new CategoryAxis();
+    public BarChart wykres1;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
