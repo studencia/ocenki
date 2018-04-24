@@ -97,6 +97,41 @@ public class FXMLDocumentController implements Initializable {
         rozlacz(polaczenie);
     }
     
+    public void aktualizujWykresy() {
+
+        try {
+            tstart.getChildren().clear();
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            wykres1 = new BarChart(xAxis, yAxis);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Ilość osób z wynikiem +50%");
+            Connection polaczenie = polacz();
+            Statement st;
+            st = polaczenie.createStatement();
+            String SQL = "SELECT COUNT(wynik1) as Ile FROM dane WHERE wynik1>=50;";
+            ResultSet rs = st.executeQuery(SQL);
+            rs.next();
+            series.getData().add(new XYChart.Data<>("Termin 1", rs.getInt("Ile")));
+            SQL = "SELECT COUNT(wynik2) as Ile FROM dane WHERE wynik2>=50;";
+            rs = st.executeQuery(SQL);
+            rs.next();
+            series.getData().add(new XYChart.Data<>("Termin 2", rs.getInt("Ile")));
+            SQL = "SELECT COUNT(wynik3) as Ile FROM dane WHERE wynik3>=50;";
+            rs = st.executeQuery(SQL);
+            rs.next();
+            series.getData().add(new XYChart.Data<>("Termin 3", rs.getInt("Ile")));
+            wykres1.getData().add(series);
+            rozlacz(polaczenie);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            tstart.getChildren().add(wykres1);
+        }
+
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
