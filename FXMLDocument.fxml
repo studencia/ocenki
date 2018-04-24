@@ -1,38 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="447.0" prefWidth="697.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="apka.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="660.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apka.FXMLDocumentController">
    <children>
-      <Pane layoutY="-1.0" prefHeight="447.0" prefWidth="145.0" style="-fx-background-color: green;">
+      <Pane layoutX="-2.0" layoutY="124.0" prefHeight="536.0" prefWidth="234.0" style="-fx-background-color: #545A6B;">
          <children>
-            <Pane prefHeight="95.0" prefWidth="145.0" style="-fx-background-color: blue;">
+            <Button fx:id="start" alignment="BOTTOM_CENTER" layoutX="-1.0" layoutY="52.0" mnemonicParsing="false" onAction="#kstart" prefHeight="95.0" prefWidth="231.0" style="-fx-background-color: #545A6B;" text="Strona główna" textFill="#e8e8e8">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="dodaj" alignment="BOTTOM_CENTER" layoutX="-5.0" layoutY="164.0" mnemonicParsing="false" onAction="#kdodaj" prefHeight="77.0" prefWidth="237.0" style="-fx-background-color: #545A6B;" text="Dodaj nowe treści" textAlignment="CENTER" textFill="#e8e8e8">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="wyniki" alignment="BOTTOM_CENTER" layoutX="-3.0" layoutY="248.0" mnemonicParsing="false" onAction="#kwyniki" prefHeight="85.0" prefWidth="222.0" style="-fx-background-color: #545A6B;" text="Analizuj wyniki" textFill="#e8e8e8">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="pomoc" alignment="BOTTOM_CENTER" layoutX="2.0" layoutY="337.0" mnemonicParsing="false" onAction="#kpomoc" prefHeight="95.0" prefWidth="222.0" style="-fx-background-color: #545A6B;" text="Skorzystaj z pomocy" textAlignment="CENTER" textFill="#e8e8e8" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="94.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@1291781-64%20(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="85.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@1372380-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="88.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@316026-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="86.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@430102-64.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="-1.0" layoutY="-7.0" prefHeight="132.0" prefWidth="232.0" style="-fx-background-color: #C5DCA0;">
+         <children>
+            <Label layoutX="24.0" layoutY="39.0" text="uWAL" textFill="#fff9f9">
+               <font>
+                  <Font name="System Bold Italic" size="50.0" />
+               </font>
+            </Label>
+            <Label layoutX="158.0" layoutY="44.0" text="V1.1" textFill="#fff9f9">
+               <font>
+                  <Font name="System Bold Italic" size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="tstart" layoutX="232.0" layoutY="126.0" prefHeight="534.0" prefWidth="890.0" style="-fx-background-color: #DCDCDC;">
+         <children>
+            <Label layoutX="23.0" layoutY="23.0" text="STRONA GŁÓWNA" />
+            <Label layoutX="592.0" layoutY="61.0" text="LICZBA ZDANYCH - PODZIAŁ NA TERMINY" />
+            <BarChart fx:id="wykres1" layoutX="46.0" layoutY="78.0" prefHeight="301.0" prefWidth="408.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <Pane layoutX="468.0" layoutY="86.0" prefHeight="327.0" prefWidth="408.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="twyniki" layoutX="231.0" layoutY="126.0" prefHeight="534.0" prefWidth="890.0" style="-fx-background-color: #DCDCDC;" visible="false">
+         <children>
+            <ListView fx:id="lista" layoutX="65.0" layoutY="146.0" prefHeight="348.0" prefWidth="786.0" style="fx-font-size: 16;" />
+            <Label layoutX="65.0" layoutY="60.0" text="WYŚWIETL WYNIKI Z " />
+            <Label layoutX="65.0" layoutY="123.0" text="PODGLĄD" />
+            <ChoiceBox fx:id="wybor" layoutX="194.0" layoutY="56.0" prefHeight="25.0" prefWidth="207.0" />
+            <Button fx:id="wybrane" layoutX="412.0" layoutY="56.0" mnemonicParsing="false" onAction="#kwybierz" text="wybierz" />
+         </children>
+      </Pane>
+      <Pane layoutX="232.0" layoutY="1.0" prefHeight="126.0" prefWidth="890.0">
+         <children>
+            <Label layoutX="57.0" layoutY="96.0" text="LICZBA UDUPIEŃ " />
+            <Label layoutX="258.0" layoutY="94.0" text="LICZBA ZDANYCH" />
+            <Label layoutX="644.0" layoutY="94.0" text="STOSUNEK ZDANYCH DO UDPIONYCH" />
+            <Label fx:id="pasekZdane" layoutX="78.0" layoutY="18.0" text="20">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label fx:id="pasekNiezdane" layoutX="266.0" layoutY="15.0" text="324">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label fx:id="pasekProcenty" layoutX="702.0" layoutY="17.0" text="60%" textFill="#412ee8">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Separator layoutX="202.0" layoutY="9.0" orientation="VERTICAL" prefHeight="102.0" prefWidth="2.0" />
+            <Separator layoutX="392.0" layoutY="14.0" orientation="VERTICAL" prefHeight="102.0" prefWidth="2.0" />
+            <Separator layoutX="622.0" layoutY="14.0" orientation="VERTICAL" prefHeight="102.0" prefWidth="2.0" />
+            <Label fx:id="pasekWszyscy" layoutX="469.0" layoutY="15.0" text="324">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label layoutX="423.0" layoutY="94.0" text="LICZBA WSZYSTKICH STUDENTÓW" />
+         </children>
+      </Pane>
+      <Pane fx:id="tpomoc" layoutX="233.0" layoutY="126.0" prefHeight="534.0" prefWidth="890.0" style="-fx-background-color: #DCDCDC;" visible="false">
+         <children>
+            <Label layoutX="23.0" layoutY="23.0" text="POMOC" />
+         </children>
+      </Pane>
+      <Pane fx:id="pasek" layoutX="232.0" layoutY="126.0" prefHeight="534.0" prefWidth="890.0" style="-fx-background-color: #DCDCDC;" visible="false">
+         <children>
+            <BarChart layoutX="40.0" layoutY="50.0" prefHeight="196.0" prefWidth="812.0">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <ListView layoutX="65.0" layoutY="304.0" prefHeight="190.0" prefWidth="786.0" />
+            <Label layoutX="23.0" layoutY="23.0" text="LICZBA ZDANYCH - PODZIAŁ NA TERMINY" />
+            <Label layoutX="37.0" layoutY="273.0" text="LICZBA ZDANYCH - PODZIAŁ NA TERMINY" />
+         </children>
+      </Pane>
+      <Pane fx:id="tdodaj" layoutX="233.0" layoutY="126.0" prefHeight="534.0" prefWidth="890.0" style="-fx-background-color: #DCDCDC;" visible="false">
+         <children>
+            <Label layoutX="23.0" layoutY="23.0" text="DODAWANIE NOWYCH WYNIKÓW" />
+            <Pane layoutX="87.0" layoutY="95.0" prefHeight="281.0" prefWidth="287.0">
                <children>
-                  <Label layoutX="29.0" layoutY="39.0" text="uwal 1.0" />
+                  <Button fx:id="dodajdobazy" layoutX="153.0" layoutY="128.0" mnemonicParsing="false" onAction="#kdodajdobazy" prefHeight="102.0" prefWidth="87.0" text="Dodaj" />
+                  <TextField fx:id="indeks" layoutX="94.0" layoutY="49.0" />
+                  <TextField fx:id="nazwisko" layoutX="94.0" layoutY="89.0" />
+                  <TextField fx:id="wyn1" layoutX="94.0" layoutY="128.0" prefHeight="25.0" prefWidth="40.0" />
+                  <TextField fx:id="wyn2" layoutX="94.0" layoutY="164.0" prefHeight="25.0" prefWidth="40.0" />
+                  <TextField fx:id="wyn3" layoutX="94.0" layoutY="202.0" prefHeight="25.0" prefWidth="40.0" />
+                  <Label layoutX="14.0" layoutY="53.0" text="Indeks" />
+                  <Label layoutX="14.0" layoutY="93.0" text="Nazwisko" />
+                  <Label layoutX="14.0" layoutY="132.0" text="Wynik 1" />
+                  <Label layoutX="14.0" layoutY="168.0" text="Wynik 2" />
+                  <Label layoutX="14.0" layoutY="206.0" text="Wynik 3" />
                </children>
             </Pane>
-            <Button layoutX="14.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Start" />
-            <Button layoutX="14.0" layoutY="252.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Dodaj" />
-            <Button layoutX="14.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Wyniki" />
-            <Button layoutX="14.0" layoutY="379.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Pomoc" />
          </children>
       </Pane>
-      <Pane layoutX="144.0" prefHeight="95.0" prefWidth="553.0" style="-fx-background-color: orange;">
-         <children>
-            <Label layoutX="37.0" layoutY="73.0" text="niezdane" />
-            <Label layoutX="169.0" layoutY="73.0" text="zdane" />
-            <Label layoutX="296.0" layoutY="73.0" text="wszystkich" />
-            <Label layoutX="430.0" layoutY="73.0" text="zdane/nieezdane" />
-            <Label layoutX="57.0" layoutY="48.0" text="0" />
-            <Label layoutX="181.0" layoutY="48.0" text="0" />
-            <Label layoutX="320.0" layoutY="48.0" text="0" />
-            <Label layoutX="472.0" layoutY="48.0" text="0" />
-         </children>
-      </Pane>
-      <Pane layoutX="145.0" layoutY="95.0" prefHeight="351.0" prefWidth="553.0" style="-fx-background-color: grey;" />
    </children>
 </AnchorPane>
