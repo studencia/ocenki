@@ -139,6 +139,60 @@ public class FXMLDocumentController implements Initializable {
         aktualizujWykresy();
     }
     
+    @FXML
+    private void kdodaj(ActionEvent event) {
+        tdodaj.setVisible(true);
+        twyniki.setVisible(false);
+        aktualizuj();
+    }
+
+    @FXML
+    private void kwyniki(ActionEvent event) {
+        twyniki.setVisible(true);
+        tdodaj.setVisible(false);
+    }
+
+    @FXML
+    private void kwybierz(ActionEvent event) {
+        try {
+            Connection polacznie = polacz();
+            Statement st = polacznie.createStatement();
+            int wybranaOpcja = wybor.getSelectionModel().getSelectedIndex();
+            String SQL = "SELECT nrIndeksu,nazwisko,wynik1,wynik2,wynik3,ocenaKoncowa FROM dane;";
+            ResultSet rs = st.executeQuery(SQL);
+            ObservableList<String> listaInfo = FXCollections.observableArrayList();
+            rs.next();
+            System.out.println("Wybrana opcja: " + String.valueOf(wybranaOpcja));
+            if (wybranaOpcja == 0) {
+                while (!rs.isAfterLast()) {
+                    String tekst = rs.getString("nrIndeksu") + "  |  " + rs.getString("nazwisko") + " : " + rs.getString("wynik1") + "%";
+                    listaInfo.add(tekst);
+                    rs.next();
+                }
+                lista.setItems(listaInfo);
+            }
+            if (wybranaOpcja == 1) {
+                while (!rs.isAfterLast()) {
+                    String tekst = rs.getString("nrIndeksu") + "  |  " + rs.getString("nazwisko") + " : " + rs.getString("wynik1") + "% , " + rs.getString("wynik2") + "%";
+                    listaInfo.add(tekst);
+                    rs.next();
+                }
+                lista.setItems(listaInfo);
+            }
+            if (wybranaOpcja == 2) {
+                while (!rs.isAfterLast()) {
+                    String tekst = rs.getString("nrIndeksu") + "  |  " + rs.getString("nazwisko") + " : " + rs.getString("wynik1") + "% , " + rs.getString("wynik2") + "% , " + rs.getString("wynik3") + "% |  Ocena końcowa: " + rs.getString("ocenaKoncowa");
+                    listaInfo.add(tekst);
+                    rs.next();
+                }
+                lista.setItems(listaInfo);
+            }
+            rozlacz(polacznie);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
