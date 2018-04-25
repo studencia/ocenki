@@ -132,6 +132,13 @@ public class FXMLDocumentController implements Initializable {
 
     }
     
+    @FXML
+    private void kstart(ActionEvent event) {
+        tdodaj.setVisible(false);
+        twyniki.setVisible(false);
+        aktualizujWykresy();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
