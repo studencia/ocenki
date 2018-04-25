@@ -193,6 +193,52 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    @FXML
+    private void kdodajdobazy(ActionEvent event) {
+        String nrIndeksu = indeks.getText();
+        String nazwiskoStudenta = nazwisko.getText();
+        String wynik1 = wyn1.getText();
+        String wynik2 = wyn2.getText();
+        String wynik3 = wyn3.getText();
+        try {
+            int testNrIndeksu = Integer.parseInt(nrIndeksu);
+            int testWynik1 = Integer.parseInt(wynik1);
+            int testWynik2 = Integer.parseInt(wynik2);
+            int testWynik3 = Integer.parseInt(wynik3);
+            if ((testWynik1 >= 0) && (testWynik1 <= 100) && (testWynik2 >= 0) && (testWynik2 <= 100) && (testWynik3 >= 0) && (testWynik3 <= 100)) {
+                double srednia = ((double) testWynik1 + (double) testWynik2 + (double) testWynik3) / 3;
+                int ocena = wystawOcene(srednia);
+                String SQL = "INSERT INTO dane VALUES(" + indeks.getText() + ",\"" + nazwiskoStudenta + "\"," + wynik1 + "," + wynik2 + "," + wynik3 + "," + String.valueOf(ocena) + ");";
+                Connection polaczenie = polacz();
+                Statement st;
+                st = polaczenie.createStatement();
+                st.execute(SQL);
+                rozlacz(polaczenie);
+                aktualizuj();
+                JOptionPane.showMessageDialog(null, "Dodano:\n" + nrIndeksu + " - " + nazwiskoStudenta + "\nWyniki kolokwiów: " + wynik1 + "% , " + wynik2 + "% , " + wynik3 + "%\nOcena końcowa: " + String.valueOf(ocena));
+            } else {
+                System.out.println("Źle wprowadzone wyniki");
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println("Niepoprawny numer indeksu lub wyniku");
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public int wystawOcene(double srednia) {
+        if (srednia < 50) {
+            return 2;
+        } else if ((srednia >= 50) && (srednia < 70)) {
+            return 3;
+        } else if ((srednia >= 70) && (srednia < 90)) {
+            return 4;
+        } else {
+            return 5;
+        }
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
