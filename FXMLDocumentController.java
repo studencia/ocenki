@@ -242,6 +242,11 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        aktualizuj();
+        wybor.setItems(FXCollections.observableArrayList(
+                "1 termin", "2 termin ", "wszystkie terminy")
+        );
+        aktualizujWykresy();
     }    
     
 }
