@@ -1,18 +1,38 @@
 package apka;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import java.text.DecimalFormat;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 
 public class FXMLDocumentController implements Initializable {
-    
+
     @FXML
     public Pane tdodaj;
     public Pane tstart;
     public Pane twyniki;
+    public Pane tpomoc;
     public Label pasekWszyscy;
     public Label pasekZdane;
     public Label pasekNiezdane;
@@ -27,40 +47,15 @@ public class FXMLDocumentController implements Initializable {
     public NumberAxis xAxis = new NumberAxis();
     public CategoryAxis yAxis = new CategoryAxis();
     public BarChart wykres1;
-    
+
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
-    
-    public Connection polacz() {
-        String DBDRIVER = "com.mysql.jdbc.Driver";
-        String DBURL = "jdbc:mysql://127.0.0.1:3306/baza";
-        String DBUSER = "root";
-        String DBPASS = "";
-
-        Connection polaczenie = null;
-
-        try {
-            Class.forName(DBDRIVER).newInstance();
-            polaczenie = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return polaczenie;
+    private void kstart(ActionEvent event) {
+        tdodaj.setVisible(false);
+        twyniki.setVisible(false);
+        tpomoc.setVisible(false);
+        aktualizujWykresy();
     }
 
-    public void rozlacz(Connection polaczenie) {
-        try {
-            polaczenie.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     public void aktualizuj() {
         Connection polaczenie = polacz();
         Statement st;
@@ -96,53 +91,39 @@ public class FXMLDocumentController implements Initializable {
         }
         rozlacz(polaczenie);
     }
-    
-    public void aktualizujWykresy() {
+
+    public Connection polacz() {
+        String DBDRIVER = "com.mysql.jdbc.Driver";
+        String DBURL = "jdbc:mysql://127.0.0.1:3306/baza";
+        String DBUSER = "root";
+        String DBPASS = "";
+
+        Connection polaczenie = null;
 
         try {
-            tstart.getChildren().clear();
-            CategoryAxis xAxis = new CategoryAxis();
-            NumberAxis yAxis = new NumberAxis();
-            wykres1 = new BarChart(xAxis, yAxis);
-            XYChart.Series series = new XYChart.Series();
-            series.setName("Ilość osób z wynikiem +50%");
-            Connection polaczenie = polacz();
-            Statement st;
-            st = polaczenie.createStatement();
-            String SQL = "SELECT COUNT(wynik1) as Ile FROM dane WHERE wynik1>=50;";
-            ResultSet rs = st.executeQuery(SQL);
-            rs.next();
-            series.getData().add(new XYChart.Data<>("Termin 1", rs.getInt("Ile")));
-            SQL = "SELECT COUNT(wynik2) as Ile FROM dane WHERE wynik2>=50;";
-            rs = st.executeQuery(SQL);
-            rs.next();
-            series.getData().add(new XYChart.Data<>("Termin 2", rs.getInt("Ile")));
-            SQL = "SELECT COUNT(wynik3) as Ile FROM dane WHERE wynik3>=50;";
-            rs = st.executeQuery(SQL);
-            rs.next();
-            series.getData().add(new XYChart.Data<>("Termin 3", rs.getInt("Ile")));
-            wykres1.getData().add(series);
-            rozlacz(polaczenie);
-            
-        } catch (SQLException ex) {
+            Class.forName(DBDRIVER).newInstance();
+            polaczenie = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            tstart.getChildren().add(wykres1);
         }
 
+        return polaczenie;
     }
-    
-    @FXML
-    private void kstart(ActionEvent event) {
-        tdodaj.setVisible(false);
-        twyniki.setVisible(false);
-        aktualizujWykresy();
+
+    public void rozlacz(Connection polaczenie) {
+        try {
+            polaczenie.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     @FXML
     private void kdodaj(ActionEvent event) {
         tdodaj.setVisible(true);
         twyniki.setVisible(false);
+        tpomoc.setVisible(false);
         aktualizuj();
     }
 
@@ -150,6 +131,7 @@ public class FXMLDocumentController implements Initializable {
     private void kwyniki(ActionEvent event) {
         twyniki.setVisible(true);
         tdodaj.setVisible(false);
+        tpomoc.setVisible(false);
     }
 
     @FXML
@@ -192,7 +174,14 @@ public class FXMLDocumentController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @FXML
+    private void kpomoc(ActionEvent event) {
+        tdodaj.setVisible(false);
+        twyniki.setVisible(false);
+ tpomoc.setVisible(true);
+    }
+
     @FXML
     private void kdodajdobazy(ActionEvent event) {
         String nrIndeksu = indeks.getText();
@@ -238,7 +227,42 @@ public class FXMLDocumentController implements Initializable {
             return 5;
         }
     }
-    
+
+    public void aktualizujWykresy() {
+
+        try {
+            tstart.getChildren().clear();
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            wykres1 = new BarChart(xAxis, yAxis);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Ilość osób z wynikiem +50%");
+            Connection polaczenie = polacz();
+            Statement st;
+            st = polaczenie.createStatement();
+            String SQL = "SELECT COUNT(wynik1) as Ile FROM dane WHERE wynik1>=50;";
+            ResultSet rs = st.executeQuery(SQL);
+            rs.next();
+            series.getData().add(new XYChart.Data<>("Termin 1", rs.getInt("Ile")));
+            SQL = "SELECT COUNT(wynik2) as Ile FROM dane WHERE wynik2>=50;";
+            rs = st.executeQuery(SQL);
+            rs.next();
+            series.getData().add(new XYChart.Data<>("Termin 2", rs.getInt("Ile")));
+            SQL = "SELECT COUNT(wynik3) as Ile FROM dane WHERE wynik3>=50;";
+            rs = st.executeQuery(SQL);
+            rs.next();
+            series.getData().add(new XYChart.Data<>("Termin 3", rs.getInt("Ile")));
+            wykres1.getData().add(series);
+            rozlacz(polaczenie);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            tstart.getChildren().add(wykres1);
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -247,6 +271,6 @@ public class FXMLDocumentController implements Initializable {
                 "1 termin", "2 termin ", "wszystkie terminy")
         );
         aktualizujWykresy();
-    }    
-    
+    }
+
 }
